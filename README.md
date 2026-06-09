@@ -6,8 +6,8 @@ Monorepo de serveurs MCP (Model Context Protocol) prêts à l'emploi.
 
 ```
 Mcp.catalog/
-├── apps/              # Serveurs MCP
-│   └── mcp-hiboutik/  # Serveur MCP pour l'API Hiboutik POS
+├── mcps/              # Serveurs MCP
+│   └── hiboutik/  # Serveur MCP pour l'API Hiboutik POS
 ├── packages/          # Packages partagés
 │   └── shared-mcp/    # Types et utilitaires communs aux MCP
 └── ...
@@ -42,8 +42,8 @@ pnpm typecheck
 
 ## Serveurs MCP disponibles
 
-| Serveur | Description |
-|---------|-------------|
+| Serveur                             | Description                         |
+| ----------------------------------- | ----------------------------------- |
 | [mcp-hiboutik](./apps/mcp-hiboutik) | 200+ outils pour l'API Hiboutik POS |
 
 ## Ajouter un nouveau serveur MCP
