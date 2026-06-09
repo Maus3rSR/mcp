@@ -42,13 +42,13 @@ pnpm typecheck
 
 ## Serveurs MCP disponibles
 
-| Serveur                             | Description                         |
-| ----------------------------------- | ----------------------------------- |
-| [mcp-hiboutik](./apps/mcp-hiboutik) | 200+ outils pour l'API Hiboutik POS |
+| Serveur                     | Description                         |
+| --------------------------- | ----------------------------------- |
+| [hiboutik](./mcps/hiboutik) | 200+ outils pour l'API Hiboutik POS |
 
 ## Ajouter un nouveau serveur MCP
 
-1. Créer un dossier dans `apps/mcp-<nom>/`
+1. Créer un dossier dans `mcp/<nom>/`
 2. Initialiser le `package.json` en utilisant le catalog pour les dépendances communes
 3. Étendre `tsconfig.json` depuis la racine
 4. Implémenter le serveur en suivant les patterns de `shared-mcp`
