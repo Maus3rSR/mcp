@@ -1,0 +1,35 @@
+{
+  "name": "@mcp-catalog/hiboutik",
+  "version": "1.0.0",
+  "description": "MCP Server for Hiboutik POS API",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "mcp-hiboutik": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "start": "node dist/index.js",
+    "typecheck": "tsc --noEmit",
+    "test": "echo 'No tests configured'"
+  },
+  "keywords": [
+    "mcp",
+    "hiboutik",
+    "pos",
+    "api",
+    "model-context-protocol"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@mcp-catalog/shared": "workspace:*",
+    "@modelcontextprotocol/sdk": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "tsup": "catalog:",
+    "typescript": "catalog:"
+  }
+}

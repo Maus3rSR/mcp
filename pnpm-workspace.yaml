@@ -1,0 +1,17 @@
+packages:
+  - apps/*
+  - packages/*
+
+catalog:
+  # MCP ecosystem
+  "@modelcontextprotocol/sdk": ^1.29.0
+
+  # Utilities
+  zod: ^4.1.5
+
+  # Build tools
+  tsup: ^8.5.0
+
+  # Types & TypeScript
+  "@types/node": ^22.0.0
+  typescript: ^5.7.0
