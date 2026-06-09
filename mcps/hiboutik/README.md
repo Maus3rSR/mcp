@@ -40,19 +40,22 @@ Ce serveur MCP implémente les domaines suivants de l'API Hiboutik :
 
 ### Étapes d'installation
 
-1. **Naviguer dans le dossier du projet :**
+1. **Cloner le dépôt :**
+
    ```bash
-   cd apps/mcp-hiboutik
+   git clone https://github.com/Maus3rSR/Mcp.catalog.git
+   cd Mcp.catalog
    ```
 
 2. **Installer les dépendances :**
+
    ```bash
-   npm install
+   pnpm install
    ```
 
 3. **Compiler le projet :**
    ```bash
-   npm run build
+   pnpm build
    ```
 
 ## Configuration
@@ -61,12 +64,12 @@ Ce serveur MCP implémente les domaines suivants de l'API Hiboutik :
 
 Le serveur nécessite les variables d'environnement suivantes :
 
-| Variable | Description | Exemple |
-|----------|-------------|---------|
-| `HIBOUTIK_BASE_URL` | URL de base de l'API | `https://emerveille.hiboutik.com/api` |
-| `HIBOUTIK_ACCOUNT` | Nom du compte Hiboutik | `emerveille` |
-| `HIBOUTIK_USER` | Nom d'utilisateur API | `api_user` |
-| `HIBOUTIK_API_KEY` | Clé API | `votre_cle_api_ici` |
+| Variable            | Description            | Exemple                  |
+| ------------------- | ---------------------- | ------------------------ |
+| `HIBOUTIK_BASE_URL` | URL de base de l'API   | `votre_url_hiboutik_api` |
+| `HIBOUTIK_ACCOUNT`  | Nom du compte Hiboutik | `emerveille`             |
+| `HIBOUTIK_USER`     | Nom d'utilisateur API  | `api_user`               |
+| `HIBOUTIK_API_KEY`  | Clé API                | `votre_cle_api_ici`      |
 
 ### Récupérer vos identifiants API Hiboutik
 
@@ -82,32 +85,35 @@ Le serveur nécessite les variables d'environnement suivantes :
 Ajoutez le serveur MCP à votre fichier de configuration Claude Desktop :
 
 **macOS :**
+
 ```bash
 ~/Library/Application Support/Claude/claude_desktop_config.json
 ```
 
 **Windows :**
+
 ```bash
 %AppData%\Claude\claude_desktop_config.json
 ```
 
 **Linux :**
+
 ```bash
 ~/.config/Claude/claude_desktop_config.json
 ```
 
-### 2. Exemple de configuration
+### 2. Configuration depuis le dépôt cloné localement
+
+Après avoir cloné le dépôt et compilé (voir [Installation](#installation)) :
 
 ```json
 {
   "mcpServers": {
     "hiboutik": {
       "command": "node",
-      "args": [
-        "/chemin/vers/votre/projet/apps/mcp-hiboutik/dist/index.js"
-      ],
+      "args": ["/chemin/vers/Mcp.catalog/mcps/hiboutik/dist/index.js"],
       "env": {
-        "HIBOUTIK_BASE_URL": "https://emerveille.hiboutik.com/api",
+        "HIBOUTIK_BASE_URL": "votre_url_hiboutik_api",
         "HIBOUTIK_ACCOUNT": "emerveille",
         "HIBOUTIK_USER": "votre_utilisateur",
         "HIBOUTIK_API_KEY": "votre_cle_api"
@@ -117,7 +123,35 @@ Ajoutez le serveur MCP à votre fichier de configuration Claude Desktop :
 }
 ```
 
-### 3. Alternative : Configuration avec npx (si publié sur npm)
+### 3. Configuration via GitHub directement avec npx
+
+Pour utiliser le serveur sans cloner le dépôt, `npx` peut exécuter un package **directement depuis GitHub** (dépôt public) :
+
+```json
+{
+  "mcpServers": {
+    "hiboutik": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "--package",
+        "github:Maus3rSR/Mcp.catalog#main",
+        "mcp-hiboutik"
+      ],
+      "env": {
+        "HIBOUTIK_BASE_URL": "votre_url_hiboutik_api",
+        "HIBOUTIK_ACCOUNT": "emerveille",
+        "HIBOUTIK_USER": "votre_utilisateur",
+        "HIBOUTIK_API_KEY": "votre_cle_api"
+      }
+    }
+  }
+}
+```
+
+> **Remarque :** Cette méthode requiert un dépôt **public**. Pour un dépôt **privé**, voir la section [Dépôt privé](#dépôt-privé) ci-dessous.
+
+### 4. Alternative : Configuration avec npx (si publié sur npm)
 
 Si le package est publié sur npm :
 
@@ -128,7 +162,7 @@ Si le package est publié sur npm :
       "command": "npx",
       "args": ["-y", "mcp-hiboutik"],
       "env": {
-        "HIBOUTIK_BASE_URL": "https://emerveille.hiboutik.com/api",
+        "HIBOUTIK_BASE_URL": "votre_url_hiboutik_api",
         "HIBOUTIK_ACCOUNT": "emerveille",
         "HIBOUTIK_USER": "votre_utilisateur",
         "HIBOUTIK_API_KEY": "votre_cle_api"
@@ -138,7 +172,7 @@ Si le package est publié sur npm :
 }
 ```
 
-### 4. Redémarrer Claude Desktop
+### 5. Redémarrer Claude Desktop
 
 Après modification de la configuration, redémarrez Claude Desktop pour charger le serveur MCP.
 
@@ -155,7 +189,7 @@ npx @modelcontextprotocol/inspector node dist/index.js
 ### Exécution directe
 
 ```bash
-export HIBOUTIK_BASE_URL="https://emerveille.hiboutik.com/api"
+export HIBOUTIK_BASE_URL="votre_url_hiboutik_api"
 export HIBOUTIK_ACCOUNT="emerveille"
 export HIBOUTIK_USER="votre_utilisateur"
 export HIBOUTIK_API_KEY="votre_cle_api"
@@ -168,29 +202,34 @@ node dist/index.js
 Une fois configuré, vous pouvez demander à Claude d'effectuer des opérations Hiboutik :
 
 ### Gestion des clients
+
 - "Liste tous mes clients"
 - "Crée un nouveau client nommé Jean Dupont"
 - "Recherche les clients qui ont leur anniversaire aujourd'hui"
 - "Quel est le solde de crédit du client #123 ?"
 
 ### Gestion des produits
+
 - "Liste tous les produits de la catégorie Vêtements"
 - "Recherche les produits avec le code-barre 123456789"
 - "Quels sont les produits en alerte de stock ?"
 - "Crée un nouveau produit : T-shirt bleu à 29.99€"
 
 ### Gestion des ventes
+
 - "Liste les ventes d'aujourd'hui au magasin #1"
 - "Crée une nouvelle vente pour le client #456"
 - "Ajoute le produit #789 à la vente #100"
 - "Ferme la vente #100 avec un paiement en espèces"
 
 ### Rapports
+
 - "Quel est le chiffre d'affaires du mois dernier ?"
 - "Liste les produits les plus vendus cette semaine"
 - "Donne-moi le rapport Z d'hier"
 
 ### Stock
+
 - "Quel est le stock disponible pour le produit #50 ?"
 - "Liste les produits en rupture de stock"
 - "Crée un transfert de stock du dépôt #1 au #2"
@@ -265,6 +304,7 @@ src/
 ## Contribution
 
 Les contributions sont les bienvenues ! N'hésitez pas à :
+
 - Signaler des bugs
 - Proposer des améliorations
 - Ajouter de nouveaux outils pour les endpoints manquants
