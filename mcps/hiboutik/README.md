@@ -71,7 +71,7 @@ Le serveur nécessite les variables d'environnement suivantes :
 | Variable            | Description            | Exemple                  |
 | ------------------- | ---------------------- | ------------------------ |
 | `HIBOUTIK_BASE_URL` | URL de base de l'API   | `votre_url_hiboutik_api` |
-| `HIBOUTIK_ACCOUNT`  | Nom du compte Hiboutik | `emerveille`             |
+| `HIBOUTIK_ACCOUNT`  | Nom du compte Hiboutik | `votre_email_de_compte`  |
 | `HIBOUTIK_USER`     | Nom d'utilisateur API  | `api_user`               |
 | `HIBOUTIK_API_KEY`  | Clé API                | `votre_cle_api_ici`      |
 
@@ -118,7 +118,7 @@ Après avoir cloné le dépôt et compilé (voir [Installation](#installation)) 
       "args": ["/chemin/vers/Mcp.catalog/mcps/hiboutik/dist/index.js"],
       "env": {
         "HIBOUTIK_BASE_URL": "votre_url_hiboutik_api",
-        "HIBOUTIK_ACCOUNT": "emerveille",
+        "HIBOUTIK_ACCOUNT": "votre_email_de_compte",
         "HIBOUTIK_USER": "votre_utilisateur",
         "HIBOUTIK_API_KEY": "votre_cle_api"
       }
@@ -144,7 +144,7 @@ Pour utiliser le serveur sans cloner le dépôt, `npx` peut exécuter un package
       ],
       "env": {
         "HIBOUTIK_BASE_URL": "votre_url_hiboutik_api",
-        "HIBOUTIK_ACCOUNT": "emerveille",
+        "HIBOUTIK_ACCOUNT": "votre_email_de_compte",
         "HIBOUTIK_USER": "votre_utilisateur",
         "HIBOUTIK_API_KEY": "votre_cle_api"
       }
@@ -167,7 +167,7 @@ Si le package est publié sur npm :
       "args": ["-y", "mcp-hiboutik"],
       "env": {
         "HIBOUTIK_BASE_URL": "votre_url_hiboutik_api",
-        "HIBOUTIK_ACCOUNT": "emerveille",
+        "HIBOUTIK_ACCOUNT": "votre_email_de_compte",
         "HIBOUTIK_USER": "votre_utilisateur",
         "HIBOUTIK_API_KEY": "votre_cle_api"
       }
@@ -194,7 +194,7 @@ npx @modelcontextprotocol/inspector node dist/index.js
 
 ```bash
 export HIBOUTIK_BASE_URL="votre_url_hiboutik_api"
-export HIBOUTIK_ACCOUNT="emerveille"
+export HIBOUTIK_ACCOUNT="votre_email_de_compte"
 export HIBOUTIK_USER="votre_utilisateur"
 export HIBOUTIK_API_KEY="votre_cle_api"
 
