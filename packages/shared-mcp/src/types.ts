@@ -1,4 +1,5 @@
-import type { CallToolResult, Tool } from "@modelcontextprotocol/sdk/types.js";
+import type { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
+import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 
 /**
  * Standard MCP tool call result — alias of the SDK's CallToolResult
@@ -6,12 +7,11 @@ import type { CallToolResult, Tool } from "@modelcontextprotocol/sdk/types.js";
 export type McpToolResult = CallToolResult;
 
 /**
- * Generic tool handler function signature
+ * Tool registration function — registers tools with an McpServer instance
  */
-export type ToolHandler<TConfig> = (
-  name: string,
-  args: Record<string, unknown> | undefined,
+export type ToolRegistrar<TConfig> = (
+  server: McpServer,
   config: TConfig,
-) => Promise<McpToolResult>;
+) => void;
 
-export type { Tool, CallToolResult };
+export type { CallToolResult, McpServer };

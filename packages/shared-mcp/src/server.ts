@@ -1,49 +1,27 @@
-import { Server } from "@modelcontextprotocol/sdk/server/index.js";
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
-import {
-  CallToolRequestSchema,
-  ListToolsRequestSchema,
-} from "@modelcontextprotocol/sdk/types.js";
-import type { Tool } from "@modelcontextprotocol/sdk/types.js";
-import type { ToolHandler } from "./types.js";
+import type { ToolRegistrar } from "./types.js";
 
 export interface McpServerOptions<TConfig> {
   name: string;
   version: string;
-  tools: Tool[];
-  handler: ToolHandler<TConfig>;
   config: TConfig;
+  registerTools: ToolRegistrar<TConfig>;
 }
 
 /**
  * Bootstrap an MCP server with stdio transport.
- * Registers all tools and routes call_tool requests to the provided handler.
+ * Uses the high-level McpServer API for simplified tool registration.
  */
 export async function startMcpServer<TConfig>(
   options: McpServerOptions<TConfig>,
 ): Promise<void> {
-  const { name, version, tools, handler, config } = options;
+  const { name, version, config, registerTools } = options;
 
-  const server = new Server({ name, version }, { capabilities: { tools: {} } });
+  const server = new McpServer({ name, version });
 
-  server.setRequestHandler(ListToolsRequestSchema, async () => ({ tools }));
-
-  server.setRequestHandler(CallToolRequestSchema, async (request) => {
-    const { name: toolName, arguments: args } = request.params;
-    try {
-      return await handler(
-        toolName,
-        args as Record<string, unknown> | undefined,
-        config,
-      );
-    } catch (error) {
-      const message = error instanceof Error ? error.message : String(error);
-      return {
-        content: [{ type: "text" as const, text: `Error: ${message}` }],
-        isError: true,
-      };
-    }
-  });
+  // Register all tools with the server
+  registerTools(server, config);
 
   const transport = new StdioServerTransport();
   await server.connect(transport);
