@@ -31,21 +31,14 @@ import { registerOtherTools } from "./tools/others.js";
 
 // Hiboutik API configuration
 const HIBOUTIK_BASE_URL = process.env.HIBOUTIK_BASE_URL || "";
-const HIBOUTIK_ACCOUNT = process.env.HIBOUTIK_ACCOUNT || "";
 const HIBOUTIK_USER = process.env.HIBOUTIK_USER || "";
 const HIBOUTIK_API_KEY = process.env.HIBOUTIK_API_KEY || "";
 
-if (
-  !HIBOUTIK_BASE_URL ||
-  !HIBOUTIK_ACCOUNT ||
-  !HIBOUTIK_USER ||
-  !HIBOUTIK_API_KEY
-) {
+if (!HIBOUTIK_BASE_URL || !HIBOUTIK_USER || !HIBOUTIK_API_KEY) {
   console.error("Missing required environment variables. Please set:");
   console.error(
     "  - HIBOUTIK_BASE_URL (e.g., https://youraccount.hiboutik.com/api)",
   );
-  console.error("  - HIBOUTIK_ACCOUNT");
   console.error("  - HIBOUTIK_USER");
   console.error("  - HIBOUTIK_API_KEY");
   process.exit(1);
@@ -53,14 +46,12 @@ if (
 
 export interface HiboutikConfig {
   baseUrl: string;
-  account: string;
   user: string;
   apiKey: string;
 }
 
 const config: HiboutikConfig = {
   baseUrl: HIBOUTIK_BASE_URL,
-  account: HIBOUTIK_ACCOUNT,
   user: HIBOUTIK_USER,
   apiKey: HIBOUTIK_API_KEY,
 };

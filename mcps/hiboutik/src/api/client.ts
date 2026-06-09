@@ -4,14 +4,14 @@ export async function hiboutikRequest(
   config: HiboutikConfig,
   endpoint: string,
   method: "GET" | "POST" | "PUT" | "DELETE" = "GET",
-  body?: Record<string, unknown>
+  body?: Record<string, unknown>,
 ): Promise<unknown> {
   const url = `${config.baseUrl}${endpoint}`;
-  
+
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
-    "Accept": "application/json",
-    "Authorization": `Basic ${Buffer.from(`${config.account}:${config.user}:${config.apiKey}`).toString("base64")}`,
+    Accept: "application/json",
+    Authorization: `Basic ${Buffer.from(`${config.user}:${config.apiKey}`).toString("base64")}`,
   };
 
   const options: RequestInit = {
@@ -35,7 +35,7 @@ export async function hiboutikRequest(
   if (contentType && contentType.includes("application/json")) {
     return await response.json();
   }
-  
+
   // Return text for non-JSON responses
   const text = await response.text();
   return text ? JSON.parse(text) : null;
@@ -46,14 +46,14 @@ export async function hiboutikFormRequest(
   config: HiboutikConfig,
   endpoint: string,
   method: "POST" | "PUT" | "DELETE" = "POST",
-  params?: Record<string, unknown>
+  params?: Record<string, unknown>,
 ): Promise<unknown> {
   const url = `${config.baseUrl}${endpoint}`;
-  
+
   const headers: Record<string, string> = {
     "Content-Type": "application/x-www-form-urlencoded",
-    "Accept": "application/json",
-    "Authorization": `Basic ${Buffer.from(`${config.account}:${config.user}:${config.apiKey}`).toString("base64")}`,
+    Accept: "application/json",
+    Authorization: `Basic ${Buffer.from(`${config.user}:${config.apiKey}`).toString("base64")}`,
   };
 
   const options: RequestInit = {
@@ -82,7 +82,7 @@ export async function hiboutikFormRequest(
   if (contentType && contentType.includes("application/json")) {
     return await response.json();
   }
-  
+
   const text = await response.text();
   return text ? JSON.parse(text) : null;
 }

@@ -2,6 +2,10 @@
 
 Un serveur MCP (Model Context Protocol) complet pour l'API Hiboutik POS. Ce serveur expose plus de 200 outils permettant d'interagir avec toutes les capacités de l'API REST Hiboutik.
 
+## Documentation API
+
+https://emerveille.hiboutik.com/docapi/json/
+
 ## Fonctionnalités
 
 Ce serveur MCP implémente les domaines suivants de l'API Hiboutik :
