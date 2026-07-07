@@ -2,6 +2,9 @@ packages:
   - mcps/*
   - packages/*
 
+onlyBuiltDependencies:
+  - esbuild
+
 catalog:
   # MCP ecosystem
   "@modelcontextprotocol/sdk": ^1.29.0
