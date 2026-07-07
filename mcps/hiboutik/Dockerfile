@@ -10,7 +10,7 @@ RUN corepack enable && corepack prepare pnpm@11.10.0 --activate
 WORKDIR /app
 
 # Copy workspace manifests first (better layer caching)
-COPY package.json pnpm-workspace.yaml pnpm-lock.yaml tsconfig.json ./
+COPY package.json pnpm-workspace.yaml pnpm-lock.yaml tsconfig.json .npmrc ./
 
 # Copy package manifests for all workspace members
 COPY packages/shared-mcp/package.json ./packages/shared-mcp/package.json

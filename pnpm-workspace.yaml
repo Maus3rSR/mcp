@@ -2,6 +2,10 @@ packages:
   - mcps/*
   - packages/*
 
+injectWorkspacePackages: true
+syncInjectedDepsAfterScripts:
+  - build
+
 catalog:
   # MCP ecosystem
   "@modelcontextprotocol/sdk": ^1.29.0
