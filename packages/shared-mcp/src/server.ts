@@ -74,17 +74,20 @@ async function startHttpServer<TConfig>({
 
   const httpServer = createServer(async (req, res) => {
     // Only handle /mcp endpoint
-    if (req.url !== "/mcp") {
+    const parsedUrl = new URL(req.url!, `http://localhost`);
+    if (parsedUrl.pathname !== "/mcp") {
       res.writeHead(404).end("Not found");
       return;
     }
 
-    // Bearer token auth
+    // Bearer token auth (header or URL query param)
     if (authToken) {
       const authHeader = req.headers["authorization"];
-      const provided = authHeader?.startsWith("Bearer ")
+      const fromHeader = authHeader?.startsWith("Bearer ")
         ? authHeader.slice(7)
         : undefined;
+      const fromQuery = parsedUrl.searchParams.get("token") ?? undefined;
+      const provided = fromHeader ?? fromQuery;
       if (provided !== authToken) {
         res
           .writeHead(401, { "WWW-Authenticate": 'Bearer realm="MCP"' })
