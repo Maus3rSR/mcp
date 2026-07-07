@@ -44,6 +44,9 @@ if (!HIBOUTIK_BASE_URL || !HIBOUTIK_USER || !HIBOUTIK_API_KEY) {
   process.exit(1);
 }
 
+const TRANSPORT = (process.env.TRANSPORT || "stdio") as "stdio" | "http";
+const PORT = parseInt(process.env.PORT || "3000", 10);
+
 export interface HiboutikConfig {
   baseUrl: string;
   user: string;
@@ -89,4 +92,6 @@ startMcpServer({
   version: "1.0.0",
   config,
   registerTools,
+  transport: TRANSPORT,
+  port: PORT,
 }).catch(console.error);
