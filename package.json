@@ -13,9 +13,8 @@
     "turbo": "^2.3.3",
     "typescript": "catalog:"
   },
-  "packageManager": "pnpm@10.18.0",
-  "volta": {
-    "node": "23.11.1",
-    "pnpm": "11.10.0"
+  "packageManager": "pnpm@11.10.0",
+  "engines": {
+    "node": ">=23.11.1"
   }
 }
