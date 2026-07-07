@@ -15,6 +15,8 @@ export interface McpServerOptions<TConfig> {
   transport?: "stdio" | "http";
   /** HTTP port when transport is "http" (default: 3000) */
   port?: number;
+  /** Bearer token required on all HTTP requests. If omitted, no auth check. */
+  authToken?: string;
 }
 
 /**
@@ -31,10 +33,11 @@ export async function startMcpServer<TConfig>(
     registerTools,
     transport: transportMode = "stdio",
     port = 3000,
+    authToken,
   } = options;
 
   if (transportMode === "http") {
-    await startHttpServer({ name, version, config, registerTools, port });
+    await startHttpServer({ name, version, config, registerTools, port, authToken });
   } else {
     await startStdioServer({ name, version, config, registerTools });
   }
@@ -61,9 +64,10 @@ async function startHttpServer<TConfig>({
   config,
   registerTools,
   port,
+  authToken,
 }: Pick<
   McpServerOptions<TConfig>,
-  "name" | "version" | "config" | "registerTools" | "port"
+  "name" | "version" | "config" | "registerTools" | "port" | "authToken"
 >): Promise<void> {
   // Map of active transports keyed by session ID
   const transports = new Map<string, StreamableHTTPServerTransport>();
@@ -73,6 +77,26 @@ async function startHttpServer<TConfig>({
     if (req.url !== "/mcp") {
       res.writeHead(404).end("Not found");
       return;
+    }
+
+    // Bearer token auth
+    if (authToken) {
+      const authHeader = req.headers["authorization"];
+      const provided = authHeader?.startsWith("Bearer ")
+        ? authHeader.slice(7)
+        : undefined;
+      if (provided !== authToken) {
+        res
+          .writeHead(401, { "WWW-Authenticate": 'Bearer realm="MCP"' })
+          .end(
+            JSON.stringify({
+              jsonrpc: "2.0",
+              error: { code: -32001, message: "Unauthorized" },
+              id: null,
+            }),
+          );
+        return;
+      }
     }
 
     if (req.method === "POST") {
