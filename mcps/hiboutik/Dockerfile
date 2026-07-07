@@ -29,7 +29,7 @@ RUN pnpm --filter @mcp-catalog/shared build && \
 
 # Use pnpm deploy to produce a self-contained production bundle
 # (resolves workspace dependencies and copies only prod deps)
-RUN pnpm --filter @mcp-catalog/hiboutik deploy --prod --legacy /app/deploy
+RUN pnpm --filter @mcp-catalog/hiboutik deploy --prod /app/deploy
 
 # ─── Stage 2: Production image ───────────────────────────────────────────────
 FROM node:24-alpine AS runner
