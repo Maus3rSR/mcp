@@ -38,7 +38,7 @@ export function registerSaleTools(
       inputSchema: { sale_id: z.number() },
     },
     async ({ sale_id }) => {
-      const result = await hiboutikRequest(config, `/sale/${sale_id}/`);
+      const result = await hiboutikRequest(config, `/sales/${sale_id}`);
       return {
         content: [{ type: "text" as const, text: JSON.stringify(result, null, 2) }],
       };
@@ -84,7 +84,7 @@ export function registerSaleTools(
     async (params) => {
       const result = await hiboutikFormRequest(
         config,
-        `/sale/${params.sale_id}/`,
+        `/sales/${params.sale_id}`,
         "PUT",
         params,
       );
@@ -103,7 +103,7 @@ export function registerSaleTools(
     async ({ sale_id }) => {
       const result = await hiboutikFormRequest(
         config,
-        `/sale/${sale_id}`,
+        `/sales/${sale_id}`,
         "DELETE",
       );
       return {
