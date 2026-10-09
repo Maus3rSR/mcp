@@ -74,6 +74,7 @@ Le serveur nécessite les variables d'environnement suivantes :
 | `HIBOUTIK_ACCOUNT`  | Nom du compte Hiboutik | `votre_email_de_compte`  |
 | `HIBOUTIK_USER`     | Nom d'utilisateur API  | `api_user`               |
 | `HIBOUTIK_API_KEY`  | Clé API                | `votre_cle_api_ici`      |
+| `HIBOUTIK_DEFAULT_CURRENCY` | Devise de repli des ventes si la devise du magasin est introuvable (optionnel, défaut `EUR`) | `EUR` |
 
 ### Récupérer vos identifiants API Hiboutik
 

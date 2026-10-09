@@ -54,16 +54,54 @@ export function registerSaleTools(
         store_id: z.number(),
         sale_note: z.string().optional(),
         sale_reference: z.string().optional(),
-        sale_type: z.string().optional(),
+        quotation: z
+          .boolean()
+          .optional()
+          .describe("true to create a quotation (devis) instead of a sale. Default: false"),
+        currency_code: z
+          .string()
+          .length(3)
+          .optional()
+          .describe(
+            "ISO 4217 currency code (e.g. EUR, USD). Default: default currency of the store (store_id), falling back to HIBOUTIK_DEFAULT_CURRENCY env var, or EUR",
+          ),
+        duty_free_sale: z.boolean().optional(),
+        prices_without_taxes: z.boolean().optional(),
+        vendor_id: z.string().optional(),
       },
     },
-    async (params) => {
-      const result = await hiboutikFormRequest(
-        config,
-        "/sales/",
-        "POST",
-        params,
-      );
+    async ({
+      quotation,
+      currency_code,
+      duty_free_sale,
+      prices_without_taxes,
+      ...params
+    }) => {
+      let storeCurrency: string | undefined;
+      if (!currency_code) {
+        try {
+          const stores = await hiboutikRequest(config, "/stores");
+          if (Array.isArray(stores)) {
+            storeCurrency = stores.find(
+              (store) => store.store_id === params.store_id,
+            )?.store_default_currency;
+          }
+        } catch {
+          storeCurrency = undefined;
+        }
+      }
+      const result = await hiboutikFormRequest(config, "/sales/", "POST", {
+        ...params,
+        currency_code: (
+          currency_code ||
+          storeCurrency ||
+          process.env.HIBOUTIK_DEFAULT_CURRENCY ||
+          "EUR"
+        ).toUpperCase(),
+        quotation: quotation ? 1 : 0,
+        duty_free_sale: duty_free_sale ? 1 : 0,
+        prices_without_taxes: prices_without_taxes ? 1 : 0,
+      });
       return {
         content: [{ type: "text" as const, text: JSON.stringify(result, null, 2) }],
       };
